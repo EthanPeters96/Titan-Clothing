@@ -194,6 +194,9 @@ This diagram illustrates:
 16. Github - To save and store the files for the website
 17. Bootstrap - Used to create the navigation bar, cards and form
 18. Google Dev Tools - To troubleshoot and test features and solve issues with responsiveness and styling
+19. Stripe - To process payments
+20. Bulma - To style the site
+21. Google Fonts - To style the site
 
 ## Deployment & Local Development
 
