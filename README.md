@@ -43,6 +43,10 @@ I used the site [coolors](https://coolors.co/palette/ccd5ae-e9edc9-fefae0-faedcd
 
 ![Color Scheme](/assets/screenshots/coolors.png)
 
+### Stock Images
+
+I used [Unsplash](https://unsplash.com/) to find my stock images.
+
 ### Favicon
 
 I used [Favicon](https://favicon.io/) to create my favicon.

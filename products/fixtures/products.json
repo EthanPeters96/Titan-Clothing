@@ -1,0 +1,67 @@
+[
+    {
+        "pk": 1,
+        "model": "products.product",
+        "fields": {
+            "sku": "tc1001",
+            "name": "Men's KIIKII™ T-Shirt",
+            "description": "This beige T-shirt features a bold blue graphic of a Maneki-neko (beckoning cat), symbolizing good luck, with the text 'KIIKII™' and Japanese characters meaning 'Believe in God.' The design is framed by dynamic lines and the word 'ORIGINAL' in bold letters, making it a stylish choice for casual and streetwear looks.",
+            "price": 29.99,
+            "category": 5,
+            "rating": 4.6,
+            "image": "alex-haigh-fEt6Wd4t4j0-unsplash.webp"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "products.product",
+        "fields": {
+            "sku": "tc1002",
+            "name": "Mens V-Tee",
+            "description": "an oversized black T-shirt with a bold, dripping yellow and orange 'V' graphic on the back",
+            "price": 59.99,
+            "category": 5,
+            "rating": 4.8,
+            "image": "ali-ghafouri-RxBnnZ2vxZc-unsplash.webp"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "products.product",
+        "fields": {
+            "sku": "tc1003",
+            "name": "Black AF-1",
+            "description": "A black AF-1 sneaker with a black sole and a black upper.",
+            "price": 150.0,
+            "category": 1,
+            "rating": 4.9,
+            "image": "andres-jasso-PqbL_mxmaUE-unsplash.webp"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "products.product",
+        "fields": {
+            "sku": "tc1004",
+            "name": "Mens Black Jumper",
+            "description": "A black jumper with a round neckline and long sleeves.",
+            "price": 80.0,
+            "category": 4,
+            "rating": 4.7,
+            "image": "tobias-van-schneider-gCeCpP15V1o-unsplash (1).webp"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "products.product",
+        "fields": {
+            "sku": "tc1005",
+            "name": "Unisex Hooded Sweatshirt",
+            "description": "A black hooded sweatshirt with a round neckline and long sleeves.",
+            "price": 49.99,
+            "category": 4,
+            "rating": 4.4,
+            "image": "jon-tyson-lTddYoITx2I-unsplash.webp"
+        }
+    }
+]
