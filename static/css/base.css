@@ -96,6 +96,7 @@ body {
     }
 }
 
+/* fixed top navbar only on mobile */
 @media (max-width: 991px) {
     .header-container {
         padding-top: 116px;
