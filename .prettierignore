@@ -1,1 +1,2 @@
 templates/base.html
+checkout/static/checkout/js/stripe_elements.js
