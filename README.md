@@ -1,5 +1,3 @@
-readme
-
 # Titan-Clothing
 
 Welcome to Titan-Clothing, the ultimate clothing store. Discover amazing clothing for men and women. From quick weeknight outfits to impressive outfits for special occasions, Titan-Clothing has something for everyone. Join our community and start your clothing adventure today!
@@ -20,20 +18,21 @@ The site is designed to be a simple and easy to use clothing store that allows u
 
 -   To be able to view the site on a range of devices
 -   To make it easy for users to find and purchase clothing items
--   To allow users to add, view, edit, and delete clothing items in there basket
+-   To allow users to add, view, edit, and delete clothing items in their basket
 -   To allow people to contact Titan-Clothing to ask questions or suggest clothing recommendations
 
 #### First Time User Goals
 
--   I want to find out what Titan-Clothing is about and what I can do.
--   I want to be able to navigate the site easily.
--   I want to see all the social media links.
--   I want to be able to view the site and clothing items on any device I am using.
+-   I want to find out what Titan-Clothing is about and what products they offer
+-   I want to be able to navigate the site easily
+-   I want to see all the social media links
+-   I want to be able to view the site and clothing items on any device I am using
 
 #### Returning User Goals
 
--   I want to easily navigate to my favorite clothing items.
--   I want to keep up to date with any new social media they post.
+-   I want to easily navigate to my favorite clothing categories
+-   I want to access my previous order information
+-   I want to keep up to date with any new products or promotions
 
 ## Design
 
@@ -41,7 +40,7 @@ The site is designed to be a simple and easy to use clothing store that allows u
 
 I used the site [coolors](https://coolors.co/palette/ccd5ae-e9edc9-fefae0-faedcd-d4a373) for the color scheme, I think these colors complement the purpose of the site well.
 
-![Color Scheme](/assets/screenshots/coolors.png)
+![Color Scheme](#)
 
 ### Stock Images
 
@@ -55,119 +54,80 @@ I used [Favicon](https://favicon.io/) to create my favicon.
 
 I used [Balsamiq](https://balsamiq.com/) for my wireframes.
 
-![FlavorVault Wireframes](/assets/screenshots/wireframes.png)
+![Titan-Clothing Wireframes](#)
 
 ## Features
 
--   The website is comprised of five main pages, all are accessible from the navigation menu (home page, recipes page, categories page, login page & signup page).
+-   The website is comprised of several main pages, all accessible from the navigation menu (home page, products page, product details, shopping bag, checkout, profile).
 
--   secondary pages are profile page and add recipe page.
+-   User account functionality including registration, login, and profile management.
 
--   Lastly one extra page. (404 page)
+-   Secure checkout process with Stripe payment integration.
 
 #### All Pages on the website have:
 
--   A responsive navigation bar at the top which allows the user to navigate through the site. To the left of the navigation bar is the text Titan-Clothing. To the right of the navigation bar are the links to the website pages (home page, recipes page, categories page, login page & signup page). When viewing on mobile devices the navigation links change to a burger toggler. This was implemented to give the site a clean look and to promote a good user experience, as users are used to seeing the burger icon when navigating a site on a mobile device.
+-   A responsive navigation bar at the top which allows the user to navigate through the site. To the left of the navigation bar is the Titan-Clothing logo. To the right of the navigation bar are the links to the website pages and user account options. When viewing on mobile devices the navigation links change to a burger toggler for better user experience.
 
--   A footer which contains social media icons links to Instagram and Facebook. Icons were used to keep the footer clean and because they are universally recognizable.
+-   A footer which contains social media icon links to Instagram and Facebook, as well as contact information and newsletter signup.
 
 ### General features on each page
 
-Each page has the same header and footer as well as theme to complete.
+Each page has the same header and footer as well as consistent styling throughout.
 
 #### Home Page
 
-![FlavorVault Home page](/assets/screenshots/home.png)
+The home page features a hero image with a call-to-action button, featured product categories, and promotional content.
 
-#### Recipes Page
+#### Products Page
 
-![FlavorVault Recipes page](/assets/screenshots/recipe.png)
+The products page displays all clothing items with filtering and sorting options. Users can browse by category, price, or rating.
 
-#### Categories Page
+#### Product Detail Page
 
-![FlavorVault Categories page](/assets/screenshots/categories.png)
+Detailed view of individual products with size selection, quantity adjustment, and add to bag functionality.
 
-#### Login Page
+#### Shopping Bag
 
-![FlavorVault Login page](/assets/screenshots/login.png)
+Displays all items added to the bag with options to update quantities or remove items, and shows the total cost.
 
-#### Signup Page
+#### Checkout Page
 
-![FlavorVault Signup page](/assets/screenshots/signup.png)
+Secure checkout process with delivery information form and Stripe payment integration.
 
 #### Profile Page
 
-![FlavorVault Profile page](/assets/screenshots/profile.png)
+User profile page showing order history and saved delivery information.
 
 ## Data Schema
 
-The application uses MongoDB as its database, with the following collections and field structures:
+The application uses a relational database with the following main models:
 
-### Users Collection
+### User Model
 
-{
+-   Standard Django user model with authentication fields
+-   Extended with UserProfile model for additional information
 
-"\_id": ObjectId,
+### Product Model
 
-"username": String,
+-   Product information including name, description, price, category, and images
+-   Includes options for sizes, colors, and other attributes
 
-"password": String (hashed),
+### Order Model
 
-"email": String
+-   Order information including user, delivery details, and payment status
+-   Connected to OrderLineItem model for individual products in the order
 
-}
+### Category Model
 
-### Recipes Collection
+-   Product categories with name and friendly name fields
 
-{
+The models are related in the following ways:
 
-"\_id": ObjectId,
-
-"recipe_name": String,
-
-"category_name": String,
-
-"recipe_description": String,
-
-"ingredients": Array,
-
-"instructions": Array,
-
-"created_by": String,
-
-"date_added": Date
-
-}
-
-### Categories Collection
-
-{
-
-"\_id": ObjectId,
-
-"category_name": String,
-
-"category_description": String,
-
-"created_by": String
-
-}
-
-The collections are related in the following ways:
-
--   Recipes reference categories through the `category_name` field
--   Recipes and categories reference users through the `created_by` field which matches the user's `username`
--   Each recipe and category document stores the username of its creator
-
-### Entity Relationship Diagram (ERD)
-
-![Entity Relationship Diagram](/assets/screenshots/erd.png)
-
-This diagram illustrates:
-
--   One user can create many recipes (1:Many)
--   One user can create many categories (1:Many)
--   One category can contain many recipes (1:Many)
+-   Products belong to Categories (Many-to-One)
+-   Orders contain OrderLineItems (One-to-Many)
+-   OrderLineItems reference Products (Many-to-One)
+-   Users have UserProfiles (One-to-One)
+-   Orders are associated with Users (Many-to-One)
 
 ## Technologies Used
 
@@ -180,60 +140,48 @@ This diagram illustrates:
 
 ### Frameworks, Libraries & Programs Used
 
-1. Balsamiq - Used to create wireframes
-2. Flask - Used to create the backend for the website
-3. Flask-WTF - Used to create the forms for the website
-4. Flask-Login - Used to create the login system for the website
-5. Jinja - Used to create the dynamic pages for the website
-6. Heroku - Used to deploy the website
-7. MongoDB - Used to store the data for the website
-8. dnspython - Used to connect to the database
-9. jQuery - Used to make the site more interactive
-10. Pylint - To check for errors in the code
-11. Black - To format the code app.py
-12. prettier - To format all the other files
-13. Font Awesome - For icons
-14. pymongo - Used to interact with the database
-15. Git - For version control
-16. Github - To save and store the files for the website
-17. Bootstrap - Used to create the navigation bar, cards and form
-18. Google Dev Tools - To troubleshoot and test features and solve issues with responsiveness and styling
-19. Stripe - To process payments
-20. Bulma - To style the site
-21. Google Fonts - To style the site
+1. Django - Python web framework used to build the site
+2. Bootstrap - For responsive design and styling
+3. jQuery - JavaScript library for DOM manipulation
+4. Stripe - For payment processing
+5. AWS S3 - For static and media file storage
+6. Heroku - For deployment
+7. PostgreSQL - Database for the deployed application
+8. Git - For version control
+9. GitHub - To save and store the files for the website
+10. Font Awesome - For icons
+11. Google Fonts - For typography
+12. Pillow - Python imaging library for image processing
+13. Gunicorn - WSGI HTTP Server for deployment
+14. Django Allauth - For user authentication
+15. Django Crispy Forms - For form styling
+16. Django Countries - For country field in forms
 
 ## Deployment & Local Development
 
 ### Deployment
 
-The site is deployed using Heroku - [FlavorVault](https://flavorvault-d681a47fade4.herokuapp.com)
+The site is deployed using Heroku - [Titan-Clothing](https://titan-clothing-d681a47fade4.herokuapp.com)
 
 To Deploy the site using Heroku:
 
 1. Create a `requirements.txt` file using the terminal command `pip freeze > requirements.txt`
 
-2. Create a `Procfile` with the terminal command `echo web: python app.py > Procfile`
+2. Create a `Procfile` with the terminal command `echo web: gunicorn titan_clothing.wsgi:application > Procfile`
 
 3. Login to Heroku and create a new app by clicking "New" and "Create new app"
 
 4. Choose a name for your app (must be unique) and select your region
 
-5. From the deploy tab on Heroku:
-
-    - Select "Connect to GitHub" as the deployment method
-    - Search for your repository name and click "Connect"
-    - Scroll to the bottom of the deploy page and select "Enable Automatic Deploys"
-
-6. Set up your environment variables in Heroku:
+5. Set up your environment variables in Heroku:
 
     - Click the settings tab
     - Click "Reveal Config Vars"
-    - Add any necessary environment variables (e.g., SECRET_KEY, DATABASE_URL)
+    - Add necessary environment variables (SECRET_KEY, DATABASE_URL, AWS keys, etc.)
 
-7. Push these changes to your GitHub repository: `bash
-git add . 
-git commit -m "Deployment: Add requirements.txt and Procfile"
-git push   `
+6. Connect to GitHub and enable automatic deploys from your repository
+
+7. Make sure DEBUG is set to False in your settings.py file
 
 8. Your app will now be deployed to Heroku and will update automatically each time you push changes to GitHub
 
@@ -259,52 +207,34 @@ To clone the repository:
 
 ## Testing
 
-### Jest Testing
+### Automated Testing
 
-I have written a testing script using jest, all tests passed.
-
-![Jest](/assets/screenshots/jest.png)
-
-### Pylint Testing
-
-I have used pylint to check for errors in the code. and black to format the code.
-
-app.py is pep8 compliant and passes pylint with no errors.
-
-![Pylint](/assets/screenshots/pylint.png)
+I have written automated tests for key functionality using Django's testing framework.
 
 ### Manual Testing
 
-| Feature         | Action                                | Expected result                                   | Tested | Passed | Comments |
-| --------------- | ------------------------------------- | ------------------------------------------------- | ------ | ------ | -------- |
-| Home            | Click on the "Home" link              | The user is redirected to the main page           | Yes    | Yes    | -        |
-| New Recipes     | Click on the "New Recipes" link       | The user is redirected to the recipes page        | Yes    | Yes    | -        |
-| Login           | Click on the "Login" link             | The user is redirected to the login page          | Yes    | Yes    | -        |
-| Register        | Click on the "Register" link          | The user is redirected to the register page       | Yes    | Yes    | -        |
-| Logout          | Click on the "Logout" link            | The user is redirected to the logout page         | Yes    | Yes    | -        |
-| Profile         | Click on the "Profile" link           | The user is redirected to the profile page        | Yes    | Yes    | -        |
-| Add Recipe      | Click on the "Add Recipe" button      | The user is redirected to the add recipe page     | Yes    | Yes    | -        |
-| Edit Recipe     | Click on the "Edit Recipe" button     | The user is redirected to the edit recipe page    | Yes    | Yes    | -        |
-| Delete Recipe   | Click on the "Delete" button          | Modal appears asking for confirmation             | Yes    | Yes    | -        |
-| Delete Recipe   | Click "Cancel" in delete modal        | Modal closes, recipe is not deleted               | Yes    | Yes    | -        |
-| Delete Recipe   | Click "Delete" in delete modal        | Recipe is deleted and user sees success message   | Yes    | Yes    | -        |
-| Add Category    | Click on the "Add Category" button    | The user is redirected to the add category page   | Yes    | Yes    | -        |
-| View Category   | Click on the "View Category" button   | The user is redirected to the view category page  | Yes    | Yes    | -        |
-| Edit Category   | Click on the "Edit Category" button   | The user is redirected to the edit category page  | Yes    | Yes    | -        |
-| Delete Category | Click on the "Delete Category" button | Modal appears asking for confirmation             | Yes    | Yes    | -        |
-| Delete Category | Click "Cancel" in delete modal        | Modal closes, category is not deleted             | Yes    | Yes    | -        |
-| Delete Category | Click "Delete" in delete modal        | Category is deleted and user sees success message | Yes    | Yes    | -        |
-| 404 Error       | Click on a non-existent link          | The user is redirected to the 404 page            | Yes    | Yes    | -        |
+| Feature                  | Action                             | Expected result                               | Tested | Passed | Comments |
+| ------------------------ | ---------------------------------- | --------------------------------------------- | ------ | ------ | -------- |
+| User Registration        | Complete signup form               | Account created and verification email sent   | Yes    | Yes    | -        |
+| User Login               | Enter credentials and submit       | User logged in and redirected to home page    | Yes    | Yes    | -        |
+| Product Filtering        | Select category from navigation    | Only products from that category displayed    | Yes    | Yes    | -        |
+| Product Search           | Enter search term in search bar    | Relevant products displayed                   | Yes    | Yes    | -        |
+| Add to Bag               | Click "Add to Bag" on product      | Product added to bag and notification shown   | Yes    | Yes    | -        |
+| Update Quantity          | Change quantity in shopping bag    | Quantity updated and totals recalculated      | Yes    | Yes    | -        |
+| Remove from Bag          | Click "Remove" in shopping bag     | Item removed from bag and totals recalculated | Yes    | Yes    | -        |
+| Checkout                 | Complete checkout form and payment | Order created and confirmation shown          | Yes    | Yes    | -        |
+| View Profile             | Navigate to profile page           | User's order history and saved info displayed | Yes    | Yes    | -        |
+| Update Profile           | Edit delivery information          | Information updated for future orders         | Yes    | Yes    | -        |
+| Admin Product Management | Add/edit/delete products as admin  | Products successfully managed in database     | Yes    | Yes    | -        |
 
-The site was also tested using dev tools on Google Chrome for responsiveness.
+The site was also tested using dev tools on Google Chrome for responsiveness across different device sizes.
 
 ### Known Bugs
 
--   Add category button icon display issue on mobile devices (unresolved)
--   New recipe form not displaying correctly on mobile devices (resolved)
--   Edit recipe form not displaying correctly on mobile devices (resolved)
+-   Minor styling issues on some mobile devices (resolved)
+-   Checkout form validation error messages sometimes unclear (in progress)
 
-### LightHouse
+### Lighthouse
 
 I have tested my website using lighthouse.
 
@@ -312,104 +242,69 @@ I have tested my website using lighthouse.
 
 ![Home Page](/assets/screenshots/home-lighthouse.png)
 
-#### Recipes Page
+#### Products Page
 
-![Recipes](/assets/screenshots/recipe-lighthouse.png)
+![Products](/assets/screenshots/recipe-lighthouse.png)
 
 #### Profile Page
 
 ![Profile](/assets/screenshots/profile-lighthouse.png)
 
-#### Categories Page
-
-![Categories](/assets/screenshots/categories-lighthouse.png)
-
-#### Login Page
-
-![Login](/assets/screenshots/login-lighthouse.png)
-
-#### Register Page
-
-![Register](/assets/screenshots/register-lighthouse.png)
-
 ### Compatibility
 
-Tested on [Google Chrome](https://www.google.co.uk/) for functionality, appearance, and responsiveness. All features passed.
+Tested on Google Chrome, Firefox, Safari, and Microsoft Edge for functionality, appearance, and responsiveness. All features passed.
 
-### Validator
+### Validator Testing
 
-I have used [W3C](https://www.w3.org/) & [JSHint](https://jshint.com/) to validate my code.
-
-### HTML
-
-![HTML](/assets/screenshots/html-val.png)
-
-Tested on all pages.
-
-### CSS
-
-![CSS](/assets/screenshots/css-val.png)
-
-### JS
-
-![JS](/assets/screenshots/js-hint.png)
+I have used W3C HTML Validator, W3C CSS Validator, and JSHint to validate my code.
 
 ## Security Features
 
 ### Authentication
 
--   User authentication is implemented using Flask-Login
--   Passwords are hashed using Werkzeug's security features before storage
--   Login is required for creating, editing, and deleting recipes/categories
--   Users can only modify their own content
+-   User authentication is implemented using Django Allauth
+-   Passwords are securely hashed
+-   Email verification for new accounts
+-   Login required for checkout and profile access
+
+### Payment Security
+
+-   Stripe payment processing with webhooks for backup order creation
+-   No sensitive payment data stored on the server
+-   Secure checkout process with validation
 
 ### Form Security
 
--   CSRF (Cross-Site Request Forgery) protection is implemented using Flask-WTF
--   Input validation and sanitization is performed on all form submissions
--   File upload validation restricts file types and sizes
+-   CSRF protection on all forms
+-   Input validation and sanitization
+-   Secure file upload handling
 
 ### Database Security
 
--   MongoDB connection string is stored as an environment variable
--   Database credentials are never exposed in the code
--   Queries are parameterized to prevent injection attacks
-
-### Session Security
-
--   Session cookies are HTTP-only
--   Secure flag is set on cookies in production
--   Sessions expire after period of inactivity
--   Session data is stored server-side
+-   Environment variables for database credentials
+-   Parameterized queries to prevent SQL injection
 
 ### General Security Measures
 
--   Debug mode is disabled in production
--   Environment variables are used for sensitive configuration
--   Error messages don't reveal sensitive information
--   Regular security updates are applied to all dependencies
-
-### Rate Limiting
-
--   API endpoints are rate-limited to prevent abuse
--   Failed login attempts are tracked and temporary lockouts are enforced
+-   Debug mode disabled in production
+-   Secret key stored as environment variable
+-   Regular security updates to dependencies
 
 ## Credits
 
-I have used previous projects to help with this project.
+### Code
 
-I used AI assistant for my script.js file. and my app.py file.
+-   The project is based on the Code Institute's Boutique Ado project
+-   Bootstrap documentation was referenced for styling components
+-   Stripe documentation was used for implementing the payment system
 
-[Boutique ADO](https://github.com/Code-Institute-Solutions/boutique_ado_v1)
+### Content
 
-[Flask-WTF](https://flask-wtf.readthedocs.io/en/1.0.x/quickstart/)
-
-I also referred to [Bootstrap](https://getbootstrap.com/) docs to learn new ways to style my page.
-
-I followed some guidance from my mentor [Graeme Taylor](https://github.com/G-Taylor).
+-   Product descriptions were written by me
+-   Images were sourced from Unsplash with appropriate licensing
 
 ### Acknowledgments
 
-I'd like to give thanks to Graeme my mentor for the support he has given me throughout my project here is a [link](https://github.com/G-Taylor) to his github.
+I'd like to give thanks to my mentor Graeme Taylor for the support he has given me throughout my project. Here is a [link](https://github.com/G-Taylor) to his GitHub.
 
-I'd also like to thank my tutor Jonathan from Nescot.
+I'd also like to thank my tutor Jonathan from Nescot for his guidance and feedback.
