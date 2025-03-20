@@ -1,0 +1,130 @@
+/* Auth Pages Styling */
+
+.auth-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 5px;
+    padding: 30px;
+    margin-top: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h1 {
+    font-family: "Raleway", sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.auth-container p {
+    font-family: "Lato", sans-serif;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Form elements */
+.auth-container label {
+    font-weight: 600;
+    color: #333;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="password"] {
+    border-radius: 0;
+    border: 1px solid #000;
+    padding: 10px 15px;
+    height: auto;
+    width: 100%;
+}
+
+.auth-container input[type="text"]:focus,
+.auth-container input[type="email"]:focus,
+.auth-container input[type="password"]:focus {
+    border-color: #222;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+/* Buttons */
+.auth-container button[type="submit"],
+.auth-container .btn-primary {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.auth-container button[type="submit"]:hover,
+.auth-container .btn-primary:hover {
+    background-color: #222;
+    color: #fff;
+}
+
+.auth-container .btn-outline-primary {
+    background-color: transparent;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.auth-container .btn-outline-primary:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Horizontal rule */
+.auth-container hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 25px 0;
+}
+
+/* Help text and links */
+.auth-container .help-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.auth-container a {
+    color: #000;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.auth-container a:hover {
+    color: #555;
+    text-decoration: underline;
+}
+
+/* Social auth buttons */
+.auth-container .social-login {
+    margin-top: 20px;
+}
+
+.auth-container .social-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 20px;
+        margin-top: 30px;
+    }
+}
