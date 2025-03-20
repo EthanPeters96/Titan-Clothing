@@ -5,6 +5,7 @@
     border-radius: 5px;
     padding: 30px;
     margin-top: 60px;
+    margin-bottom: 60px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -67,6 +68,10 @@
     color: #fff;
 }
 
+.auth-container .btn-black {
+    color: #fff !important;
+}
+
 .auth-container .btn-outline-primary {
     background-color: transparent;
     color: #000;
@@ -126,5 +131,6 @@
     .auth-container {
         padding: 20px;
         margin-top: 30px;
+        margin-bottom: 30px;
     }
 }

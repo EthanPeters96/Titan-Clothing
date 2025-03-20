@@ -1,13 +1,26 @@
 html {
     height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     background: url("/media/homepage-background.webp") no-repeat center center fixed;
     background-size: cover;
-    height: calc(100vh - 164px);
     color: #555;
     font-family: "Lato", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 0;
+}
+
+main {
+    flex: 1 0 auto;
+    padding-bottom: 1rem;
+    min-height: 70vh;
 }
 
 /* from Bulma */
@@ -91,15 +104,31 @@ a.category-badge > span.badge:hover {
 
 .btt-button {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    height: 40px;
-    width: 40px;
+    bottom: 50px;
+    right: 30px;
+    height: 42px;
+    width: 42px;
+    border-radius: 50% !important;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.btt-button.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .btt-button:hover {
     background-color: #212529;
-    color: #fff;
+    transform: translateY(-3px);
+}
+
+.btt-button:hover i {
+    color: white !important;
 }
 
 .btt-link,
@@ -175,6 +204,91 @@ a.category-badge > span.badge:hover {
     overflow-y: auto;
 }
 
+/* Footer Styles */
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    clear: both;
+    font-size: 0.9rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 10;
+}
+
+footer:hover,
+footer:focus,
+footer.active {
+    transform: translateY(0);
+}
+
+footer::before {
+    content: "▲ Site Info";
+    display: block;
+    position: absolute;
+    top: -36px;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+footer:hover::before,
+footer.active::before {
+    content: "▼ Hide Footer";
+}
+
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.footer-links a {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.footer-links a:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+footer .social-links a:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+footer a.text-white-50:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Add padding to account for the fixed footer */
+body::after {
+    content: "";
+    display: block;
+    height: 36px; /* Height of the visible footer tab */
+}
+
 /* -------------------------------- Media Queries -------------------------------- */
 
 /* Larger container on xl screens */
@@ -204,8 +318,16 @@ a.category-badge > span.badge:hover {
     .header-container {
         padding-top: 116px;
     }
+}
 
-    body {
-        height: calc(100vh - 116px);
+/* Mobile footer adjustments */
+@media (max-width: 767px) {
+    .footer-links {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
     }
 }
