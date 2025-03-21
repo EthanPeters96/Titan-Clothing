@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/faq.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 offset-md-1">
+            <h1 class="display-4 text-center my-5">Frequently Asked Questions</h1>
+
+            <div class="accordion" id="faqAccordion">
+                <!-- Shipping Questions -->
+                <div class="card mb-3">
+                    <div class="card-header bg-white" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                aria-controls="collapseOne">
+                                Shipping Information
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <h5>How long will my order take to arrive?</h5>
+                            <p>Standard delivery takes 3-5 business days within the UK. International shipping typically
+                                takes 7-14 business days, depending on the destination.</p>
+
+                            <h5>Do you offer free shipping?</h5>
+                            <p>Yes! We offer free standard delivery on all orders over £{{ free_delivery_threshold }}.
+                            </p>
+
+                            <h5>Can I track my order?</h5>
+                            <p>Absolutely. Once your order ships, you'll receive a confirmation email with tracking
+                                information.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Returns & Exchanges -->
+                <div class="card mb-3">
+                    <div class="card-header bg-white" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                Returns & Exchanges
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <h5>What is your return policy?</h5>
+                            <p>We offer a 30-day return policy for unworn items in their original condition with tags
+                                attached. Please visit our <a href="{% url 'returns' %}">Returns</a> page for more
+                                details.</p>
+
+                            <h5>How do I start a return?</h5>
+                            <p>To initiate a return, please log into your account, navigate to your order history, and
+                                select the "Return Item" option. Alternatively, contact our customer service team.</p>
+
+                            <h5>Do I have to pay for return shipping?</h5>
+                            <p>Returns are free for UK customers. International customers are responsible for return
+                                shipping costs unless the item arrived damaged or incorrect.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products -->
+                <div class="card mb-3">
+                    <div class="card-header bg-white" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                Product Information
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <h5>How do I determine my size?</h5>
+                            <p>Each product page includes a detailed size guide. If you're between sizes, we generally
+                                recommend sizing up for a more comfortable fit.</p>
+
+                            <h5>Are your products sustainable?</h5>
+                            <p>We're committed to sustainability and ethical manufacturing. Many of our products use
+                                organic or recycled materials, and we're continuously working to improve our
+                                environmental impact.</p>
+
+                            <h5>Can I wash my Titan Clothing items in the machine?</h5>
+                            <p>Care instructions vary by product. Please check the product description or garment tag
+                                for specific care recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment -->
+                <div class="card mb-3">
+                    <div class="card-header bg-white" id="headingFour">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                                aria-controls="collapseFour">
+                                Payment & Security
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <h5>What payment methods do you accept?</h5>
+                            <p>We accept Visa, Mastercard, PayPal, and Apple Pay. All payments are processed securely
+                                through Stripe.</p>
+
+                            <h5>Is my payment information secure?</h5>
+                            <p>Absolutely. We use industry-standard encryption and never store your full credit card
+                                details on our servers.</p>
+
+                            <h5>Will I be charged customs fees?</h5>
+                            <p>International orders may be subject to customs duties and taxes, which are the
+                                responsibility of the customer. These fees are not included in your order total.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center my-5">
+                <h4>Still have questions?</h4>
+                <p>Our customer service team is here to help!</p>
+                <a href="{% url 'contact' %}" class="btn btn-black rounded-0">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script type="text/javascript">
+    // Add active class to open accordion items
+    $('.collapse').on('show.bs.collapse', function () {
+        $(this).prev('.card-header').addClass('active');
+    });
+
+    $('.collapse').on('hide.bs.collapse', function () {
+        $(this).prev('.card-header').removeClass('active');
+    });
+</script>
+{% endblock %}

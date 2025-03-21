@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 offset-md-1">
+            <h1 class="display-4 text-center my-5">Returns & Exchanges</h1>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="mb-3">Our Return Policy</h3>
+                    <p>At Titan Clothing, we want you to be completely satisfied with your purchase. We offer a 30-day
+                        return policy for all unworn items in their original condition with tags still attached.</p>
+
+                    <h4 class="mt-4">Return Eligibility</h4>
+                    <ul>
+                        <li>Items must be returned within 30 days of receipt</li>
+                        <li>Products must be unworn, unwashed, and undamaged</li>
+                        <li>All original tags and packaging must be intact</li>
+                        <li>Sale items marked as "Final Sale" cannot be returned</li>
+                        <li>Undergarments, swimwear, and face masks cannot be returned for hygiene reasons</li>
+                    </ul>
+
+                    <h4 class="mt-4">Exchange Policy</h4>
+                    <p>We're happy to exchange items for a different size or color, subject to availability. To request
+                        an exchange, please follow the same process as returns and specify your preferred replacement in
+                        the notes.</p>
+
+                    <div class="alert alert-info mt-4">
+                        <strong>Please Note:</strong> Due to high demand, we cannot reserve exchange items until we
+                        receive your return. If your preferred replacement is out of stock when we process your return,
+                        we'll issue a refund instead.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="mb-3">Return Process</h3>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body text-center">
+                                    <h4 class="mb-3">For Online Purchases</h4>
+                                    <ol class="text-left">
+                                        <li>Log into your account and navigate to your order history</li>
+                                        <li>Select the "Return Item" option for the relevant order</li>
+                                        <li>Complete the return form, specifying your reason for return</li>
+                                        <li>Print the prepaid return label (UK orders only)</li>
+                                        <li>Package the item securely with all original tags</li>
+                                        <li>Drop off at your nearest post office or courier collection point</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body text-center">
+                                    <h4 class="mb-3">For In-Store Purchases</h4>
+                                    <ol class="text-left">
+                                        <li>Visit any Titan Clothing store with your item</li>
+                                        <li>Bring your original receipt or order confirmation</li>
+                                        <li>Our store associates will assist with your return or exchange</li>
+                                        <li>Returns will be refunded to your original payment method</li>
+                                        <li>Store purchases without a receipt may be eligible for store credit</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="mb-3">Refund Information</h3>
+                    <p>Once we receive and inspect your return, we'll process your refund within 3-5 business days. The
+                        refund will be issued to your original payment method.</p>
+
+                    <h5 class="mt-3">Refund Processing Times:</h5>
+                    <ul>
+                        <li><strong>Credit/Debit Cards:</strong> 5-10 business days after processing</li>
+                        <li><strong>PayPal:</strong> 2-3 business days after processing</li>
+                        <li><strong>Store Credit:</strong> Immediately available after processing</li>
+                    </ul>
+
+                    <h5 class="mt-3">Return Shipping Costs:</h5>
+                    <ul>
+                        <li><strong>UK Customers:</strong> Free returns using our prepaid label</li>
+                        <li><strong>International Customers:</strong> Customer is responsible for return shipping costs
+                        </li>
+                        <li><strong>Faulty or Incorrect Items:</strong> Free returns worldwide (contact customer service
+                            first)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center my-5">
+                <h4>Need help with a return?</h4>
+                <p>Our customer service team is here to assist you.</p>
+                <a href="{% url 'contact' %}" class="btn btn-black rounded-0">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

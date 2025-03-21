@@ -23,9 +23,9 @@
             <div class="col-4 col-md-3 mb-0">
                 <div class="footer-links">
                     <span class="text-white-50 small">Help:</span>
-                    <a href="#" class="text-white-50 small ml-2">FAQ</a>
-                    <a href="#" class="text-white-50 small ml-2">Returns</a>
-                    <a href="#" class="text-white-50 small ml-2">Contact</a>
+                    <a href="{% url 'faq' %}" class="text-white-50 small ml-2">FAQ</a>
+                    <a href="{% url 'returns' %}" class="text-white-50 small ml-2">Returns</a>
+                    <a href="{% url 'contact' %}" class="text-white-50 small ml-2">Contact</a>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                 <p class="text-white-50 mb-0 small">&copy; {% now "Y" %} Titan Clothing. All rights reserved.</p>
             </div>
             <div class="col-md-6 text-center text-md-right">
-                <div class="d-flex justify-content-md-end justify-content-center">
+                <div class="d-flex justify-content-md-end justify-content-center align-items-center">
                     <a href="#" class="text-white-50 mx-1" aria-label="Facebook"><i
                             class="fab fa-facebook-f fa-sm"></i></a>
                     <a href="#" class="text-white-50 mx-1" aria-label="Twitter"><i class="fab fa-twitter fa-sm"></i></a>
@@ -58,9 +58,9 @@
                     <a href="#" class="text-white-50 mx-1" aria-label="Pinterest"><i
                             class="fab fa-pinterest-p fa-sm"></i></a>
                     <span class="text-white-50 mx-2 small">|</span>
-                    <i class="fab fa-cc-visa fa-sm text-white-50 mx-1"></i>
-                    <i class="fab fa-cc-mastercard fa-sm text-white-50 mx-1"></i>
-                    <i class="fab fa-cc-paypal fa-sm text-white-50 mx-1"></i>
+                    <span class="text-white-50 mx-1"><i class="fab fa-cc-visa fa-sm"></i></span>
+                    <span class="text-white-50 mx-1"><i class="fab fa-cc-mastercard fa-sm"></i></span>
+                    <span class="text-white-50 mx-1"><i class="fab fa-cc-paypal fa-sm"></i></span>
                 </div>
             </div>
         </div>

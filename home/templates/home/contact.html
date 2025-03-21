@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 offset-md-1">
+            <h1 class="display-4 text-center my-5">Contact Us</h1>
+
+            <div class="row">
+                <!-- Contact Form -->
+                <div class="col-12 col-lg-7 mb-5">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4 p-lg-5">
+                            <h3 class="mb-4">Send Us a Message</h3>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="firstName">First Name*</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName"
+                                            required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="lastName">Last Name*</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address*</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="orderNumber">Order Number (if applicable)</label>
+                                    <input type="text" class="form-control" id="orderNumber" name="orderNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject">Subject*</label>
+                                    <select class="form-control" id="subject" name="subject" required>
+                                        <option value="" disabled selected>Select a subject</option>
+                                        <option value="order">Order Status</option>
+                                        <option value="return">Returns & Exchanges</option>
+                                        <option value="product">Product Information</option>
+                                        <option value="account">Account Help</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message*</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5"
+                                        required></textarea>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="privacyAgree" required>
+                                    <label class="form-check-label small" for="privacyAgree">I agree to the processing
+                                        of my data according to the privacy policy.</label>
+                                </div>
+                                <button type="submit" class="btn btn-black rounded-0 text-uppercase">Send
+                                    Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-12 col-lg-5">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h3 class="mb-3">Contact Information</h3>
+                            <p class="mb-4">Our customer service team is available to assist you Monday through Friday,
+                                9am to 6pm GMT.</p>
+
+                            <div class="d-flex mb-3">
+                                <div class="contact-icon mr-3">
+                                    <i class="fas fa-map-marker-alt fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Address</h5>
+                                    <p class="mb-0">
+                                        Titan Clothing Headquarters<br>
+                                        123 Fashion Street<br>
+                                        London, EC1A 1BB<br>
+                                        United Kingdom
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex mb-3">
+                                <div class="contact-icon mr-3">
+                                    <i class="fas fa-phone fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Phone</h5>
+                                    <p class="mb-0">+44 20 1234 5678</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex mb-3">
+                                <div class="contact-icon mr-3">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Email</h5>
+                                    <p class="mb-0">support@titanclothing.com</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="contact-icon mr-3">
+                                    <i class="fas fa-clock fa-fw"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Hours</h5>
+                                    <p class="mb-0">
+                                        Monday - Friday: 9am - 6pm<br>
+                                        Saturday: 10am - 4pm<br>
+                                        Sunday: Closed
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="mb-3">Follow Us</h3>
+                            <p>Stay connected with us on social media for the latest updates, style inspiration, and
+                                exclusive offers.</p>
+
+                            <div class="social-links d-flex justify-content-start mt-4">
+                                <a href="#" class="social-link text-center mr-3" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f fa-lg"></i>
+                                </a>
+                                <a href="#" class="social-link text-center mr-3" aria-label="Twitter">
+                                    <i class="fab fa-twitter fa-lg"></i>
+                                </a>
+                                <a href="#" class="social-link text-center mr-3" aria-label="Instagram">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                                <a href="#" class="social-link text-center" aria-label="Pinterest">
+                                    <i class="fab fa-pinterest-p fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="mt-5 mb-5">
+                <h3 class="text-center mb-4">Find Us</h3>
+                <div class="map-container">
+                    <!-- This is a placeholder for a map. In a real implementation, you would add a Google Maps or similar embed here -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <div class="embed-responsive-item bg-light d-flex align-items-center justify-content-center">
+                            <div class="text-center p-4">
+                                <i class="fas fa-map-marked-alt fa-4x mb-3"></i>
+                                <h4>Map Placeholder</h4>
+                                <p class="mb-0">In a live environment, an interactive map would be displayed here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
