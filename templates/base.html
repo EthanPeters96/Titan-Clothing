@@ -162,10 +162,12 @@
     {% block page_header %}
     {% endblock %}
 
-    <main class="flex-shrink-0">
-        {% block content %}
-        {% endblock %}
-    </main>
+    <div id="content-wrapper">
+        <main class="flex-shrink-0">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
 
     <div class="btt-button shadow-sm border border-black">
         <a class="btt-link d-flex h-100">

@@ -2,12 +2,23 @@
 $(document).ready(function () {
     const footer = $("footer");
 
+    // Always reset footer state on page load - start with footer hidden
+    footer.removeClass("active");
+    localStorage.removeItem("footerOpen");
+
     // Try to make the pseudo-element clickable
     $(document).on("click", function (e) {
         // Check if click is in the footer tab area
         const footerTop = footer.offset().top;
         if (e.pageY >= footerTop - 36 && e.pageY <= footerTop) {
             footer.toggleClass("active");
+        } else if (
+            footer.hasClass("active") &&
+            !footer.is(e.target) &&
+            footer.has(e.target).length === 0
+        ) {
+            // Close the footer when clicking outside of it (if it's open)
+            footer.removeClass("active");
         }
     });
 
@@ -20,6 +31,13 @@ $(document).ready(function () {
         }
     });
 
+    // Add keyboard support for closing the footer with Escape key
+    $(document).on("keydown", function (e) {
+        if (e.key === "Escape" && footer.hasClass("active")) {
+            footer.removeClass("active");
+        }
+    });
+
     // Allow clicking anywhere on the footer to toggle it
     footer.on("click", function (e) {
         // Only toggle if clicking directly on the footer background
@@ -28,13 +46,9 @@ $(document).ready(function () {
         }
     });
 
-    // Initialize from localStorage
-    if (localStorage.getItem("footerOpen") === "true") {
-        footer.addClass("active");
-    }
-
-    // Save state to localStorage
-    footer.on("transitionend", function () {
-        localStorage.setItem("footerOpen", footer.hasClass("active"));
+    // Add an event listener for page navigation
+    $(window).on("beforeunload", function () {
+        // Reset footer state before navigating away
+        localStorage.removeItem("footerOpen");
     });
 });
