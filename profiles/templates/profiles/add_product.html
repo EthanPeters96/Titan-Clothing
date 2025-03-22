@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <hr>
+            <h2 class="logo-font mb-4">Product Management</h2>
+            <h5 class="text-muted">Add a Product</h5>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="form-card">
+                <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-section-title">Basic Information</div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                {{ form.name.label_tag }}
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.name.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                {{ form.sku.label_tag }}
+                                {{ form.sku }}
+                                {% if form.sku.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.sku.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                {{ form.category.label_tag }}
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.category.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                {{ form.has_sizes.label_tag }}
+                                {{ form.has_sizes }}
+                                {% if form.has_sizes.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.has_sizes.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-title">Product Details</div>
+                    <div class="form-group">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                        <small class="form-text text-muted description-help">
+                            Enter a detailed description of the product.
+                        </small>
+                        {% if form.description.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.description.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                {{ form.price.label_tag }}
+                                {{ form.price }}
+                                {% if form.price.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.price.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                {{ form.rating.label_tag }}
+                                {{ form.rating }}
+                                {% if form.rating.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.rating.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-title">Product Images</div>
+                    <div class="form-group">
+                        {{ form.image_url.label_tag }}
+                        {{ form.image_url }}
+                        <small class="form-text text-muted">
+                            Enter a URL for an image hosted elsewhere
+                        </small>
+                        {% if form.image_url.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.image_url.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                        {{ form.image }}
+                        <small class="form-text text-muted">
+                            Upload an image for this product from your device.
+                        </small>
+                        {% if form.image.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.image.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div id="image-preview"></div>
+                    </div>
+
+                    <div class="text-right mt-4">
+                        <a class="btn btn-outline-black rounded-0 mr-2" href="{% url 'product_management' %}">
+                            <span class="icon">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span>Cancel</span>
+                        </a>
+                        <button class="btn btn-black rounded-0" type="submit">
+                            <span class="icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Add Product</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <div class="form-card mt-5 mt-lg-0">
+                <h5 class="mb-3">Product Tips</h5>
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Creating a Great Product</h6>
+                        <ul class="card-text pl-3">
+                            <li class="mb-2">Use clear, descriptive product names</li>
+                            <li class="mb-2">Include detailed descriptions with key features</li>
+                            <li class="mb-2">Set appropriate pricing</li>
+                            <li class="mb-2">Select the correct category for easy browsing</li>
+                            <li class="mb-2">Add high-quality images to showcase your product</li>
+                        </ul>
+                        <p class="card-text small text-muted mt-3">All products will appear in the main store after
+                            being added.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script type="text/javascript">
+    // Preview image when selected
+    $('#id_image').change(function () {
+        const file = this.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                $('#image-preview').html('<div class="image-preview-container my-3"><p class="mb-2"><strong>Image Preview:</strong></p><img src="' + event.target.result + '" class="img-fluid" style="max-height: 200px;" /></div>');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}

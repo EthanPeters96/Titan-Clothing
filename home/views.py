@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -8,8 +8,12 @@ from django.conf import settings
 
 def index(request):
     """ A view to display the index page """
-
-    return render(request, 'home/index.html')
+    try:
+        # Return a simple view with no product references
+        return render(request, 'home/index.html')
+    except Exception as e:
+        messages.error(request, f"Error loading homepage: {str(e)}")
+        return redirect(reverse('products'))
 
 
 def faq(request):
@@ -82,7 +86,7 @@ def contact(request):
             customer_body = f"""
             Dear {first_name},
 
-            Thank you for contacting Titan Clothing. 
+            Thank you for contacting Titan Clothing.
             We have received your message and will get back to you within
             1-2 business days.
 

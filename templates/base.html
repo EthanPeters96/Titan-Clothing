@@ -22,6 +22,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Raleway:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom-modal.css' %}">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'favicon.ico' %}">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
@@ -49,6 +50,7 @@
     <script src="https://js.stripe.com/acacia/stripe.js"></script>
     <!-- Custom JS -->
     <script src="{% static 'js/footer.js' %}" defer></script>
+    <script src="{% static 'js/custom-modal.js' %}" defer></script>
     {% endblock %}
 
     {% block extra_js %}
@@ -63,7 +65,7 @@
             <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
                 <a href="{% url 'home' %}" class="nav-link main-logo-link">
                     <div class="d-flex align-items-center">
-                        <img src="/media/atlas-logo.webp" alt="Titan Clothing Logo" class="mr-2" height="40">
+                        <img src="{{ MEDIA_URL }}atlas-logo.webp" alt="Titan Clothing Logo" class="mr-2" height="40">
                         <h2 class="logo-font text-black my-0"><strong>Titan</strong> Clothing</h2>
                     </div>
                 </a>
@@ -96,7 +98,7 @@
                         <div class="dropdown-menu border-0" aria-labelledby="user-options">
                             {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
-                            <a href="" class="dropdown-item">Product Management</a>
+                            <a href="{% url 'product_management' %}" class="dropdown-item">Product Management</a>
                             {% endif %}
                             <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
                             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
