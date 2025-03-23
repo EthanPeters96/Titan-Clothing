@@ -24,6 +24,8 @@ services:
             sync: false
           - key: DEBUG
             value: "True"
+          - key: ALLOWED_HOST
+            value: "titan-clothing-site-tzyy.onrender.com"
 
 databases:
     - name: titan_clothing_db
