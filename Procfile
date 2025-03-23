@@ -1,1 +1,1 @@
-web: gunicorn titan-clothing.wsgi:application
+web: gunicorn titan_clothing.wsgi:application
