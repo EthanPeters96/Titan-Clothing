@@ -110,9 +110,14 @@ class CategoryForm(forms.ModelForm):
     """Form to add or edit a category"""
     class Meta:
         model = Category
-        fields = ['name', 'friendly_name']
+        fields = ['name', 'friendly_name', 'group']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        name_help = 'URL/filtering name (lowercase, no spaces)'
+        self.fields['name'].help_text = name_help
+        self.fields['friendly_name'].help_text = 'Display name for customers'
+        group_help = 'Navigation group (e.g., Clothing, Accessories)'
+        self.fields['group'].help_text = group_help
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black rounded-0'

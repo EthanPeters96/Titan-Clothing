@@ -1,5 +1,6 @@
 <div class="collapse navbar-collapse" id="main-nav">
     <ul class="navbar-nav w-auto mx-auto">
+        <!-- All Products dropdown -->
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="all-products-link"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -13,28 +14,108 @@
             </div>
         </li>
 
+        <!-- Dynamic category groups -->
+        {% if has_category_groups and category_groups %}
+        <!-- Clothing dropdown (check if it exists in category_groups) -->
+        {% if 'Clothing' in category_groups %}
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="clothing-link"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Clothing
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
-                <a href="{% url 'products' %}?category=hoodies" class="dropdown-item">Hoodies</a>
-                <a href="{% url 'products' %}?category=t-shirts" class="dropdown-item">T-Shirts</a>
-                <a href="{% url 'products' %}?category=hoodies,t-shirts" class="dropdown-item">All Clothing</a>
+                {% for category in category_groups.Clothing %}
+                <a href="{% url 'products' %}?category={{ category.name }}" class="dropdown-item">
+                    {{ category.friendly_name }}</a>
+                {% endfor %}
+                {% if category_groups.Clothing|length > 1 %}
+                <a href="{% url 'products' %}?category={% for category in category_groups.Clothing %}{{ category.name }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    class="dropdown-item">All Clothing</a>
+                {% endif %}
             </div>
         </li>
+        {% endif %}
 
+        <!-- Accessories dropdown (check if it exists in category_groups) -->
+        {% if 'Accessories' in category_groups %}
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="accessories-link"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Accessories
+            </a>
+            <div class="dropdown-menu border-0" aria-labelledby="accessories-link">
+                {% for category in category_groups.Accessories %}
+                <a href="{% url 'products' %}?category={{ category.name }}" class="dropdown-item">
+                    {{ category.friendly_name }}</a>
+                {% endfor %}
+                {% if category_groups.Accessories|length > 1 %}
+                <a href="{% url 'products' %}?category={% for category in category_groups.Accessories %}{{ category.name }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    class="dropdown-item">All Accessories</a>
+                {% endif %}
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- Other category groups -->
+        {% for group_name, group_categories in category_groups.items %}
+        {% if group_name != 'Clothing' and group_name != 'Accessories' %}
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="{{ group_name|lower }}-link"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ group_name }}
+            </a>
+            <div class="dropdown-menu border-0" aria-labelledby="{{ group_name|lower }}-link">
+                {% for category in group_categories %}
+                <a href="{% url 'products' %}?category={{ category.name }}" class="dropdown-item">
+                    {{ category.friendly_name }}</a>
+                {% endfor %}
+                {% if group_categories|length > 1 %}
+                <a href="{% url 'products' %}?category={% for category in group_categories %}{{ category.name }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    class="dropdown-item">All {{ group_name }}</a>
+                {% endif %}
+            </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <!-- Fallback for old category system -->
+        {% if clothing_categories %}
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="clothing-link"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Clothing
+            </a>
+            <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
+                {% for category in clothing_categories %}
+                <a href="{% url 'products' %}?category={{ category.name }}" class="dropdown-item">{{
+                    category.get_friendly_name }}</a>
+                {% endfor %}
+                {% if clothing_categories.count > 1 %}
+                <a href="{% url 'products' %}?category={% for category in clothing_categories %}{{ category.name }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    class="dropdown-item">All Clothing</a>
+                {% endif %}
+            </div>
+        </li>
+        {% endif %}
+
+        {% if accessories_categories %}
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="homeware-link"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Accessories
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="homeware-link">
-                <a href="{% url 'products' %}?category=bags" class="dropdown-item">Bags</a>
-                <a href="{% url 'products' %}?category=shoes" class="dropdown-item">Shoes</a>
-                <a href="{% url 'products' %}?category=bags,shoes" class="dropdown-item">All Accessories</a>
+                {% for category in accessories_categories %}
+                <a href="{% url 'products' %}?category={{ category.name }}" class="dropdown-item">{{
+                    category.get_friendly_name }}</a>
+                {% endfor %}
+                {% if accessories_categories.count > 1 %}
+                <a href="{% url 'products' %}?category={% for category in accessories_categories %}{{ category.name }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    class="dropdown-item">All Accessories</a>
+                {% endif %}
             </div>
         </li>
+        {% endif %}
+        {% endif %}
     </ul>
 </div>
