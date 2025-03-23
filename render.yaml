@@ -3,7 +3,7 @@ services:
       name: titan-clothing-site
       env: python
       plan: free
-      buildCommand: ./build.sh
+      buildCommand: bash ./build.sh
       startCommand: gunicorn titan_clothing.wsgi:application
       envVars:
           - key: SECRET_KEY
