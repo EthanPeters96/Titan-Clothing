@@ -37,6 +37,8 @@ ALLOWED_HOSTS = [
     'localhost',
     'titan-clothing.onrender.com',
     '.onrender.com',
+    'titan-clothing-site.onrender.com',
+    'titan-clothing-site-tzyy.onrender.com',
 ]
 
 
