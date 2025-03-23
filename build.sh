@@ -1,12 +1,11 @@
-#!/usr/bin/env bash
-# Exit on error
-set -o errexit
+#!/bin/bash
 
-# Install dependencies
+# Install Python dependencies
+pip install --upgrade pip
 pip install -r requirements.txt
 
-# Collect static files
-python manage.py collectstatic --no-input
+# Run Django migrations
+python manage.py migrate
 
-# Apply database migrations
-python manage.py migrate 
+# Collect static files
+python manage.py collectstatic --noinput 
