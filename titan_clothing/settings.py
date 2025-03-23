@@ -240,3 +240,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://titan-clothing-site-tzyy.onrender.com',
     'https://*.onrender.com',
 ]
+
+# Cookie settings
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = True
