@@ -1,6 +1,6 @@
 services:
     - type: web
-      name: titan-clothing-app
+      name: titan-clothing-site
       env: python
       plan: free
       buildCommand: ./build.sh
