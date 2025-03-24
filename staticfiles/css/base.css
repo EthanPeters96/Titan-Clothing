@@ -1,0 +1,353 @@
+html {
+    height: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background: url("/media/homepage-background.webp") no-repeat center center fixed;
+    background-size: cover;
+    color: #555;
+    font-family: "Lato", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 0;
+}
+
+/* Ensure space for footer on all pages */
+#content-wrapper {
+    padding-bottom: 150px; /* Space for footer */
+}
+
+main {
+    flex: 1 0 auto;
+    padding-bottom: 1rem;
+    min-height: 70vh;
+}
+
+/* Add padding to prevent footer overlap */
+.container.mb-2 {
+    padding-bottom: 100px; /* Add space at bottom of content to prevent footer overlap */
+}
+
+/* from Bulma */
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.logo-font {
+    text-transform: uppercase;
+}
+
+.main-logo-link {
+    width: fit-content;
+}
+
+/* Buttons */
+
+.shop-now-button {
+    background: black;
+    color: white;
+    min-width: 260px;
+}
+
+.btn-black {
+    background: black;
+    color: white;
+}
+
+.btn-outline-black {
+    background: white;
+    color: black !important;
+    border: 1px solid black;
+}
+.btn-outline-black:hover,
+.btn-outline-black:active,
+.btn-outline-black:focus {
+    background: black;
+    color: white !important;
+}
+
+.shop-now-button:hover,
+.shop-now-button:active,
+.shop-now-button:focus,
+.btn-black:hover,
+.btn-black:active,
+.btn-black:focus {
+    background: #222;
+    color: white;
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.border-black {
+    border: 1px solid black !important;
+}
+
+.bg-black {
+    background-color: black !important;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: white;
+}
+
+/* Hero content positioning */
+.container.h-100 .my-auto {
+    margin-top: 250px;
+}
+
+a.category-badge > span.badge:hover {
+    background-color: #212529 !important;
+    color: #fff !important;
+}
+
+.btt-button {
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    height: 42px;
+    width: 42px;
+    border-radius: 50% !important;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.btt-button.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.btt-button:hover {
+    background-color: #212529;
+    transform: translateY(-3px);
+}
+
+.btt-button:hover i {
+    color: white !important;
+}
+
+.btt-link,
+.remove-item,
+.update-link {
+    cursor: pointer;
+}
+
+.message-container {
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 99999;
+}
+
+.custom-toast {
+    overflow: visible;
+}
+
+.toast-capper {
+    height: 2px;
+}
+
+/* from CSS-tricks.com: https://css-tricks.com/snippets/css/css-triangle/ */
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 10px solid black;
+    position: absolute;
+    top: -10px;
+    right: 36px;
+}
+
+/* Convenience classes - Match Bootstrap colors */
+.arrow-primary {
+    border-bottom-color: #007bff !important;
+}
+
+.arrow-secondary {
+    border-bottom-color: #6c757d !important;
+}
+
+.arrow-success {
+    border-bottom-color: #28a745 !important;
+}
+
+.arrow-danger {
+    border-bottom-color: #dc3545 !important;
+}
+
+.arrow-warning {
+    border-bottom-color: #ffc107 !important;
+}
+
+.arrow-info {
+    border-bottom-color: #17a2b8 !important;
+}
+
+.arrow-light {
+    border-bottom-color: #f8f9fa !important;
+}
+
+.arrow-dark {
+    border-bottom-color: #343a40 !important;
+}
+
+.bag-notification-wrapper {
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Footer Styles */
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    clear: both;
+    font-size: 0.9rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 100; /* Higher z-index */
+}
+
+footer:hover,
+footer:focus,
+footer.active {
+    transform: translateY(0);
+}
+
+footer::before {
+    content: "▲ Site Info";
+    display: block;
+    position: absolute;
+    top: -36px;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+footer:hover::before,
+footer.active::before {
+    content: "▼ Hide Footer";
+}
+
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.footer-links a {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.footer-links a:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+footer .social-links a:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+footer a.text-white-50:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Add padding to account for the fixed footer */
+body::after {
+    content: "";
+    display: block;
+    height: 36px; /* Height of the visible footer tab */
+}
+
+/* -------------------------------- Media Queries -------------------------------- */
+
+/* Larger container on xl screens */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 80%;
+    }
+
+    /* Adjust hero content position on larger screens */
+    .container.h-100 .my-auto {
+        margin-top: 300px;
+    }
+}
+
+/* Fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 164px;
+    }
+}
+
+/* Fixed top navbar only on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+}
+
+/* Mobile footer adjustments */
+@media (max-width: 767px) {
+    .footer-links {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}

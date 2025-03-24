@@ -1,0 +1,54 @@
+/* FAQ Accordion Styling */
+
+.accordion .card-header {
+    border-left: 4px solid #000;
+    transition: all 0.3s ease;
+    padding: 15px;
+}
+
+.accordion .card-header:hover {
+    background-color: #f8f9fa;
+}
+
+.accordion .btn-link {
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+.accordion .btn-link:hover {
+    color: #555;
+}
+
+.accordion .btn-link:focus {
+    box-shadow: none;
+    outline: none;
+    text-decoration: none;
+}
+
+/* Add plus/minus icons */
+.accordion .btn-link::after {
+    content: "+";
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.accordion .btn-link:not(.collapsed)::after {
+    content: "−";
+}
+
+/* Styling for open accordion items */
+.accordion .card-header.active {
+    background-color: #f8f9fa;
+}
+
+/* Add subtle animation */
+.accordion .collapse {
+    transition: all 0.35s ease;
+}
