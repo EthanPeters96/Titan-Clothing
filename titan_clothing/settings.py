@@ -195,6 +195,20 @@ if 'USE_AWS' in os.environ:
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'  # noqa
 
+    # CORS Configuration
+    AWS_S3_CORS_CONFIGURATION = {
+        'CORSRules': [{
+            'AllowedHeaders': ['*'],
+            'AllowedMethods': ['GET', 'HEAD'],
+            'AllowedOrigins': [
+                'https://titan-clothing-app-9a3af2f08286.herokuapp.com',
+                'http://titan-clothing-app-9a3af2f08286.herokuapp.com'
+            ],
+            'ExposeHeaders': [],
+            'MaxAgeSeconds': 3000
+        }]
+    }
+
     # Static and media files
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
