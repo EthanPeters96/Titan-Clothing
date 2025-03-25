@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row py-2">
             <!-- About/Logo -->
-            <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <div class="col-12 col-md-3 mb-1 mb-md-0 d-none d-md-block">
                 <div class="d-flex align-items-center">
                     <img src="{{ MEDIA_URL }}atlas-logo.webp" alt="Titan Clothing Logo" class="mr-2" height="25">
                     <h6 class="logo-font text-white mb-0"><strong>Titan</strong> Clothing</h6>
@@ -12,8 +12,8 @@
             <!-- Shop Links -->
             <div class="col-4 col-md-3 mb-0">
                 <div class="footer-links">
-                    <span class="text-white-50 small">Shop:</span>
-                    <a href="{% url 'products' %}" class="text-white-50 small ml-2">Products</a>
+                    <span class="text-white-50 small d-none d-md-inline">Shop:</span>
+                    <a href="{% url 'products' %}" class="text-white-50 small ml-md-2">Products</a>
                     <a href="{% url 'products' %}?category=new_arrivals" class="text-white-50 small ml-2">New</a>
                     <a href="{% url 'products' %}?category=deals" class="text-white-50 small ml-2">Deals</a>
                 </div>
@@ -22,8 +22,8 @@
             <!-- Customer Service -->
             <div class="col-4 col-md-3 mb-0">
                 <div class="footer-links">
-                    <span class="text-white-50 small">Help:</span>
-                    <a href="{% url 'faq' %}" class="text-white-50 small ml-2">FAQ</a>
+                    <span class="text-white-50 small d-none d-md-inline">Help:</span>
+                    <a href="{% url 'faq' %}" class="text-white-50 small ml-md-2">FAQ</a>
                     <a href="{% url 'returns' %}" class="text-white-50 small ml-2">Returns</a>
                     <a href="{% url 'contact' %}" class="text-white-50 small ml-2">Contact</a>
                 </div>
@@ -32,24 +32,24 @@
             <!-- Account -->
             <div class="col-4 col-md-3 mb-0">
                 <div class="footer-links">
-                    <span class="text-white-50 small">Account:</span>
+                    <span class="text-white-50 small d-none d-md-inline">Account:</span>
                     {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}" class="text-white-50 small ml-2">Profile</a>
+                    <a href="{% url 'profile' %}" class="text-white-50 small ml-md-2">Profile</a>
                     <a href="{% url 'account_logout' %}" class="text-white-50 small ml-2">Logout</a>
                     {% else %}
-                    <a href="{% url 'account_login' %}" class="text-white-50 small ml-2">Login</a>
+                    <a href="{% url 'account_login' %}" class="text-white-50 small ml-md-2">Login</a>
                     <a href="{% url 'account_signup' %}" class="text-white-50 small ml-2">Register</a>
                     {% endif %}
                 </div>
             </div>
         </div>
 
-        <div class="row border-top border-secondary pt-2 mt-2">
-            <div class="col-md-6 text-center text-md-left mb-1 mb-md-0">
+        <div class="row border-top border-secondary pt-2 mt-2 mobile-footer-bottom">
+            <div class="col-12 col-md-6 text-center text-md-left mb-1 mb-md-0 d-none d-md-block">
                 <p class="text-white-50 mb-0 small">&copy; {% now "Y" %} Titan Clothing. All rights reserved.</p>
             </div>
-            <div class="col-md-6 text-center text-md-right">
-                <div class="d-flex justify-content-md-end justify-content-center align-items-center">
+            <div class="col-12 col-md-6 text-center text-md-right">
+                <div class="d-flex justify-content-center justify-content-md-end align-items-center mobile-social">
                     <a href="https://www.facebook.com/" target="_blank" class="text-white-50 mx-1"
                         aria-label="Facebook"><i class="fab fa-facebook-f fa-sm"></i></a>
                     <a href="https://www.twitter.com/" target="_blank" class="text-white-50 mx-1"
@@ -58,10 +58,11 @@
                         aria-label="Instagram"><i class="fab fa-instagram fa-sm"></i></a>
                     <a href="https://www.pinterest.com/" target="_blank" class="text-white-50 mx-1"
                         aria-label="Pinterest"><i class="fab fa-pinterest-p fa-sm"></i></a>
-                    <span class="text-white-50 mx-2 small">|</span>
-                    <span class="text-white-50 mx-1"><i class="fab fa-cc-visa fa-sm"></i></span>
-                    <span class="text-white-50 mx-1"><i class="fab fa-cc-mastercard fa-sm"></i></span>
-                    <span class="text-white-50 mx-1"><i class="fab fa-cc-paypal fa-sm"></i></span>
+                    <span class="text-white-50 mx-2 small d-none d-md-inline">|</span>
+                    <span class="text-white-50 mx-1 d-none d-md-inline"><i class="fab fa-cc-visa fa-sm"></i></span>
+                    <span class="text-white-50 mx-1 d-none d-md-inline"><i
+                            class="fab fa-cc-mastercard fa-sm"></i></span>
+                    <span class="text-white-50 mx-1 d-none d-md-inline"><i class="fab fa-cc-paypal fa-sm"></i></span>
                 </div>
             </div>
         </div>
