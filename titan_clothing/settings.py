@@ -14,6 +14,9 @@ import os
 import dj_database_url
 from pathlib import Path
 
+# Set default environment variables
+os.environ.setdefault('DEVELOPMENT', '0')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -176,11 +179,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# AWS S3 Configuration
 if 'USE_AWS' in os.environ:
     # Cache control
     AWS_S3_OBJECT_PARAMETERS = {
@@ -194,25 +198,21 @@ if 'USE_AWS' in os.environ:
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'  # noqa
+    AWS_DEFAULT_ACL = None
 
-    # CORS Configuration
-    AWS_S3_CORS_CONFIGURATION = {
-        'CORSRules': [{
-            'AllowedHeaders': ['*'],
-            'AllowedMethods': ['GET', 'HEAD'],
-            'AllowedOrigins': [
-                'https://titan-clothing-app-9a3af2f08286.herokuapp.com',
-                'http://titan-clothing-app-9a3af2f08286.herokuapp.com'
-            ],
-            'ExposeHeaders': [],
-            'MaxAgeSeconds': 3000
-        }]
+    STORAGES = {
+        'default': {
+            'BACKEND': 'custom_storages.MediaStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'custom_storages.StaticStorage',
+        },
     }
 
     # Static and media files
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    # STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
-    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    # DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
     MEDIAFILES_LOCATION = 'media'
 
     # Override static and media URLs in production
@@ -228,9 +228,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
 STRIPE_CURRENCY = 'gbp'
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
-STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 
 # Email
 if 'DEVELOPMENT' in os.environ:

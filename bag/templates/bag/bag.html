@@ -50,8 +50,8 @@
                             </td>
                             <td class="py-3">
                                 <p class="my-0"><strong>{{ item.product.name }}</strong></p>
-                                <p class="my-0"><strong>Size: </strong>{% if item.product.has_sizes %}{{ item.size|upper
-                                    }}{% else %}N/A{% endif %}</p>
+                                <p class="my-0"><strong>Size: </strong>
+                                    {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
                                 <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
                             </td>
                             <td class="py-3">
@@ -102,8 +102,8 @@
                                 <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
                                 {% if free_delivery_delta > 0 %}
                                 <p class="mb-1 text-danger">
-                                    You could get free delivery by spending just <strong>£{{ free_delivery_delta
-                                        }}</strong> more!
+                                    You could get free delivery by spending just <strong>
+                                        £{{ free_delivery_delta }}</strong> more!
                                 </p>
                                 {% endif %}
                             </td>
@@ -129,8 +129,8 @@
                         <div class="col-8">
                             <div class="card-body px-2 py-2">
                                 <h5 class="card-title mb-1">{{ item.product.name }}</h5>
-                                <p class="card-text mb-1">Size: {% if item.product.has_sizes %}{{ item.size|upper }}{%
-                                    else %}N/A{% endif %}</p>
+                                <p class="card-text mb-1">Size:
+                                    {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
                                 <p class="card-text mb-1">Price: £{{ item.product.price }}</p>
                                 <form class="form update-form" action="{% url 'adjust_bag' item.item_id %}"
                                     method="POST">
