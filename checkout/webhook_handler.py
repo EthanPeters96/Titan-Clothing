@@ -53,7 +53,7 @@ class StripeWH_Handler:
 
         # Get the billing details from the payment intent
         billing_details = {
-            'email': intent.receipt_email,
+            'email': intent.metadata.get('email'),
             'name': intent.shipping.name,
             'phone': intent.shipping.phone,
             'address': {
