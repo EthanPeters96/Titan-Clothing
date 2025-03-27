@@ -29,7 +29,20 @@ def cache_checkout_data(request):
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
+        })
+        # Add billing details to the payment intent
+        stripe.PaymentIntent.modify(pid, billing_details={
             'email': request.POST.get('email'),
+            'name': request.POST.get('full_name'),
+            'phone': request.POST.get('phone_number'),
+            'address': {
+                'line1': request.POST.get('street_address1'),
+                'line2': request.POST.get('street_address2'),
+                'city': request.POST.get('town_or_city'),
+                'country': request.POST.get('country'),
+                'state': request.POST.get('county'),
+                'postal_code': request.POST.get('postcode'),
+            }
         })
         return HttpResponse(status=200)
     except Exception as e:

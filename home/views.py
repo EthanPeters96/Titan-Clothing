@@ -1,7 +1,12 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Email, To, Content, HtmlContent
+import os
 
 # Create your views here.
 
@@ -72,48 +77,86 @@ def contact(request):
 
         # Try to send email
         try:
-            # Send email to shop owner
-            send_mail(
-                f'Titan Clothing Contact Form: {full_subject}',
-                email_body,
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.DEFAULT_FROM_EMAIL],
-                fail_silently=False,
-            )
+            if 'DEVELOPMENT' in os.environ:
+                # Use Django's send_mail for development
+                send_mail(
+                    f'Titan Clothing Contact Form: {full_subject}',
+                    email_body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.DEFAULT_FROM_EMAIL],
+                    fail_silently=False,
+                )
 
-            # Send confirmation email to customer
-            customer_subject = 'Thank you for contacting Titan Clothing'
-            customer_body = f"""
-            Dear {first_name},
+                # Send confirmation email to customer
+                customer_subject = 'Thank you for contacting Titan Clothing'
+                customer_body = f"""
+                Dear {first_name},
 
-            Thank you for contacting Titan Clothing.
-            We have received your message and will get back to you within
-            1-2 business days.
+                Thank you for contacting Titan Clothing.
+                We have received your message and will get back to you within
+                1-2 business days.
 
-            Your message details:
-            Subject: {full_subject}
+                Your message details:
+                Subject: {full_subject}
 
-            Best regards,
-            The Titan Clothing Team
-            """
+                Best regards,
+                The Titan Clothing Team
+                """
 
-            send_mail(
-                customer_subject,
-                customer_body,
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-                fail_silently=False,
-            )
+                send_mail(
+                    customer_subject,
+                    customer_body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False,
+                )
+            else:
+                # Use SendGrid API for production
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                
+                # Send to admin
+                admin_email = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=settings.DEFAULT_FROM_EMAIL,
+                    subject=f'Titan Clothing Contact Form: {full_subject}',
+                    plain_text_content=email_body
+                )
+                sg.send(admin_email)
+
+                # Send confirmation to customer
+                customer_email = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=email,
+                    subject='Thank you for contacting Titan Clothing',
+                    plain_text_content=f"""
+                    Dear {first_name},
+
+                    Thank you for contacting Titan Clothing.
+                    We have received your message and will get back to you within
+                    1-2 business days.
+
+                    Your message details:
+                    Subject: {full_subject}
+
+                    Best regards,
+                    The Titan Clothing Team
+                    """
+                )
+                sg.send(customer_email)
 
             messages.success(request,
                              'Your message has been sent successfully. '
                              'We will get back to you soon!')
             return render(request, 'home/contact.html')
 
-        except Exception:
-            messages.error(request,
-                           'Sorry, there was an error sending your message. '
-                           'Please try again later or email us directly at '
-                           'support@titanclothing.com')
+        except Exception as e:
+            messages.error(
+                request,
+                'Sorry, there was an error sending your message. '
+                'Please try again later or email us directly at '
+                'support@titanclothing.com'
+            )
+            # Log the error for debugging
+            print(f"Email error: {str(e)}")
 
     return render(request, 'home/contact.html')
