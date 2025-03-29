@@ -46,55 +46,59 @@ class StripeWH_Handler:
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
-        intent = event.data.object
-        pid = intent.id
+        try:
+            intent = event.data.object
+            pid = intent.id
 
-        # Use .get() to prevent missing key errors
-        bag = intent.metadata.get("bag", "{}")
-        save_info = intent.metadata.get("save_info", False)
+            # Use .get() to prevent missing key errors
+            bag = intent.metadata.get("bag", "{}")
+            save_info = intent.metadata.get("save_info", False)
 
-        # Get the billing and shipping details
-        billing_details = intent.billing_details if intent.billing_details else {}  # noqa: E501
-        shipping_details = intent.shipping if intent.shipping else {}
+            # Get the billing and shipping details with proper null checks
+            billing_details = intent.billing_details if hasattr(intent, 'billing_details') else {}  # noqa: E501
+            shipping_details = intent.shipping if hasattr(intent, 'shipping') else {}  # noqa: E501
 
-        # Ensure shipping_details.address exists before modifying it
-        if shipping_details and shipping_details.get("address"):
-            for field, value in shipping_details["address"].items():
-                if value == "":
-                    shipping_details["address"][field] = None
+            # Ensure shipping_details.address exists before modifying it
+            if shipping_details and shipping_details.get("address"):
+                for field, value in shipping_details["address"].items():
+                    if value == "":
+                        shipping_details["address"][field] = None
 
-        # Prevent division errors if intent.amount is missing
-        grand_total = round((intent.amount or 0) / 100, 2)
+            # Prevent division errors if intent.amount is missing
+            grand_total = round((intent.amount or 0) / 100, 2)
 
-        # Update profile information if save_info was checked
-        profile = None
-        username = intent.metadata.username
-        if username != 'AnonymousUser':
-            profile = UserProfile.objects.get(user__username=username)
-            if save_info:
-                profile.default_phone_number = shipping_details.phone
-                profile.default_country = shipping_details.address.country
-                profile.default_postcode = shipping_details.address.postal_code
-                profile.default_town_or_city = shipping_details.address.city
-                profile.default_street_address1 = shipping_details.address.line1  # noqa: E501
-                profile.default_street_address2 = shipping_details.address.line2  # noqa: E501
-                profile.default_county = shipping_details.address.state
-                profile.save()
+            # Update profile information if save_info was checked
+            profile = None
+            username = intent.metadata.get('username', 'AnonymousUser')
+            if username != 'AnonymousUser':
+                try:
+                    profile = UserProfile.objects.get(user__username=username)
+                    if save_info and shipping_details:
+                        profile.default_phone_number = shipping_details.get('phone')  # noqa: E501
+                        profile.default_country = shipping_details.get('address', {}).get('country')  # noqa: E501
+                        profile.default_postcode = shipping_details.get('address', {}).get('postal_code')  # noqa: E501
+                        profile.default_town_or_city = shipping_details.get('address', {}).get('city')  # noqa: E501
+                        profile.default_street_address1 = shipping_details.get('address', {}).get('line1')  # noqa: E501
+                        profile.default_street_address2 = shipping_details.get('address', {}).get('line2')  # noqa: E501
+                        profile.default_county = shipping_details.get('address', {}).get('state')  # noqa: E501
+                        profile.save()
+                except UserProfile.DoesNotExist:
+                    profile = None
 
             order_exists = False
             attempt = 1
             while attempt <= 5:
                 try:
                     order = Order.objects.get(
-                        full_name__iexact=shipping_details.name,
-                        email__iexact=billing_details.email,
-                        phone_number__iexact=shipping_details.phone,
-                        country__iexact=shipping_details.address.country,
-                        postcode__iexact=shipping_details.address.postal_code,
-                        town_or_city__iexact=shipping_details.address.city,
-                        street_address1__iexact=shipping_details.address.line1,
-                        street_address2__iexact=shipping_details.address.line2,
-                        county__iexact=shipping_details.address.state,
+                        full_name__iexact=shipping_details.get('name', ''),
+                        email__iexact=billing_details.get('email', ''),
+                        phone_number__iexact=shipping_details.get('phone', ''),
+                        country__iexact=shipping_details.get('address', {}).get('country', ''),  # noqa: E501
+                        postcode__iexact=shipping_details.get('address', {}).get('postal_code', ''),  # noqa: E501
+                        town_or_city__iexact=shipping_details.get('address', {}).get('city', ''),  # noqa: E501
+                        street_address1__iexact=shipping_details.get('address', {}).get('line1', ''),  # noqa: E501
+                        street_address2__iexact=shipping_details.get('address', {}).get('line2', ''),  # noqa: E501
+                        county__iexact=shipping_details.get('address', {}).get('state', ''),  # noqa: E501
                         grand_total=grand_total,
                         original_bag=bag,
                         stripe_pid=pid,
@@ -104,6 +108,7 @@ class StripeWH_Handler:
                 except Order.DoesNotExist:
                     attempt += 1
                     time.sleep(1)
+
             if order_exists:
                 self._send_confirmation_email(order)
                 return HttpResponse(
@@ -113,16 +118,16 @@ class StripeWH_Handler:
                 order = None
                 try:
                     order = Order.objects.create(
-                        full_name=shipping_details.name,
+                        full_name=shipping_details.get('name', ''),
                         user_profile=profile,
-                        email=billing_details.email,
-                        phone_number=shipping_details.phone,
-                        country=shipping_details.address.country,
-                        postcode=shipping_details.address.postal_code,
-                        town_or_city=shipping_details.address.city,
-                        street_address1=shipping_details.address.line1,
-                        street_address2=shipping_details.address.line2,
-                        county=shipping_details.address.state,
+                        email=billing_details.get('email', ''),
+                        phone_number=shipping_details.get('phone', ''),
+                        country=shipping_details.get('address', {}).get('country', ''),  # noqa: E501
+                        postcode=shipping_details.get('address', {}).get('postal_code', ''),  # noqa: E501
+                        town_or_city=shipping_details.get('address', {}).get('city', ''),  # noqa: E501
+                        street_address1=shipping_details.get('address', {}).get('line1', ''),  # noqa: E501
+                        street_address2=shipping_details.get('address', {}).get('line2', ''),  # noqa: E501
+                        county=shipping_details.get('address', {}).get('state', ''),  # noqa: E501
                         grand_total=grand_total,
                         original_bag=bag,
                         stripe_pid=pid,
@@ -149,12 +154,17 @@ class StripeWH_Handler:
                     if order:
                         order.delete()
                     return HttpResponse(
-                        content=f'Webhook received: {event["type"]} | ERROR: {e}',  # noqa: E501
+                        content=f'Webhook received: {event["type"]} | ERROR: {str(e)}',  # noqa: E501
                         status=500)
+
                 self._send_confirmation_email(order)
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',  # noqa: E501
                     status=200)
+        except Exception as e:
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]} | ERROR: {str(e)}',
+                status=500)
 
     def handle_payment_intent_payment_failed(self, event):
         """

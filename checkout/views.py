@@ -8,6 +8,8 @@ from django.shortcuts import (
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from .forms import OrderForm
 from .models import Order, OrderLineItem
@@ -75,36 +77,82 @@ def checkout(request):
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
-            order.save()
-            for item_id, item_data in bag.items():
+            order.order_number = order._generate_order_number()
+
+            # Get the bag contents and calculate totals
+            current_bag = bag_contents(request)
+            order.order_total = current_bag['total']
+            order.delivery_cost = current_bag['delivery']
+            order.grand_total = current_bag['grand_total']
+
+            # Set user profile if user is authenticated
+            if request.user.is_authenticated:
                 try:
-                    product = Product.objects.get(id=item_id)
-                    if isinstance(item_data, int):
+                    profile = UserProfile.objects.get(user=request.user)
+                    order.user_profile = profile
+                except UserProfile.DoesNotExist:
+                    order.user_profile = None
+
+            order.save()
+
+            # Create order line items
+            for item_id, item_data in bag.items():
+                product = Product.objects.get(id=item_id)
+                if isinstance(item_data, int):
+                    order_line_item = OrderLineItem(
+                        order=order,
+                        product=product,
+                        quantity=item_data,
+                    )
+                    order_line_item.save()
+                else:
+                    for size, quantity in item_data['items_by_size'].items():
                         order_line_item = OrderLineItem(
                             order=order,
                             product=product,
-                            quantity=item_data,
+                            quantity=quantity,
+                            product_size=size,
                         )
                         order_line_item.save()
-                    else:
-                        for size, quantity in item_data['items_by_size'].items():  # noqa: E501
-                            order_line_item = OrderLineItem(
-                                order=order,
-                                product=product,
-                                quantity=quantity,
-                                product_size=size,
-                            )
-                            order_line_item.save()
-                except Product.DoesNotExist:
-                    messages.error(request, (
-                        "One of the products in your bag wasn't found in our database. "  # noqa: E501
-                        "Please call us for assistance!")
-                    )
-                    order.delete()
-                    return redirect(reverse('view_bag'))
 
-            request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number])) # noqa
+            # Send confirmation email
+            cust_email = order.email
+            subject = render_to_string(
+                'checkout/confirmation_emails/confirmation_email_subject.txt',
+                {'order': order})
+            body = render_to_string(
+                'checkout/confirmation_emails/confirmation_email_body.txt',
+                {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [cust_email]
+            )
+
+            # Save the info to the user's profile if requested
+            if request.user.is_authenticated:
+                save_info = request.POST.get('save_info')
+                if save_info:
+                    try:
+                        profile = UserProfile.objects.get(user=request.user)
+                        profile.default_phone_number = order.phone_number
+                        profile.default_country = order.country
+                        profile.default_postcode = order.postcode
+                        profile.default_town_or_city = order.town_or_city
+                        profile.default_street_address1 = order.street_address1
+                        profile.default_street_address2 = order.street_address2
+                        profile.default_county = order.county
+                        profile.save()
+                    except UserProfile.DoesNotExist:
+                        pass
+
+            # Clear the bag from the session
+            request.session['bag'] = {}
+
+            # Redirect to success page
+            return redirect(reverse('checkout_success', args=[order.order_number]))  # noqa: E501
         else:
             messages.error(request, 'There was an error with your form. \
                 Please double check your information.')
@@ -123,10 +171,7 @@ def checkout(request):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        """
-        Attempt to prefill the form with any info
-        the user maintains in their profile
-        """
+        # Attempt to prefill the form with info the user has their profile
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
