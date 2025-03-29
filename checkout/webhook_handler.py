@@ -51,9 +51,9 @@ class StripeWH_Handler:
         bag = intent.metadata.bag
         save_info = intent.metadata.save_info
 
-        # Get the billing details from the payment intent
+        # Get the billing and shipping details from the payment intent
         billing_details = intent.charges.data[0].billing_details
-        shipping_details = intent.charges.data[0].shipping
+        shipping_details = intent.shipping
         grand_total = round(intent.amount / 100, 2)
 
         # Clean data in the shipping details
