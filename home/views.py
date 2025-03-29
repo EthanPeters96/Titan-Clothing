@@ -93,6 +93,9 @@ def contact(request):
             Your message details:
             Subject: {full_subject}
 
+            Message:
+            {message}
+
             Best regards,
             The Titan Clothing Team
             """
