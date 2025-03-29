@@ -1,8 +1,19 @@
 .error-page-wrapper {
-    padding: 2rem;
+    padding: 3rem;
     border-radius: 1rem;
-    background: linear-gradient(145deg, #ffffff, #f8f9fa);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .error-code {
@@ -12,24 +23,44 @@
 
 .error-code h1 {
     font-size: 8rem;
-    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    color: #000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     animation: float 3s ease-in-out infinite;
+    margin-bottom: 1rem;
 }
 
 .badge {
     font-size: 1rem;
     padding: 0.5rem 1rem;
+    background-color: #000 !important;
     animation: pulse 2s infinite;
 }
 
+.error-content h2 {
+    color: #000;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.error-content p {
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
 .hover-lift {
-    transition: transform 0.2s ease-in-out;
+    transition: all 0.3s ease;
+    background: #000;
+    color: white;
+    border: none;
 }
 
 .hover-lift:hover {
     transform: translateY(-3px);
+    background: #222;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes float {
@@ -57,5 +88,35 @@
 
     100% {
         transform: scale(1);
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+    .error-page-wrapper {
+        padding: 2rem;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+
+    .container {
+        min-height: calc(100vh - 160px);
+    }
+
+    .error-code h1 {
+        font-size: 6rem;
+    }
+
+    .error-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .error-content p {
+        font-size: 1rem;
+    }
+
+    .hover-lift {
+        width: 100%;
+        margin-top: 1rem;
     }
 }
