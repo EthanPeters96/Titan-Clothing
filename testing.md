@@ -31,6 +31,7 @@ The site was also tested using dev tools on Google Chrome for responsiveness acr
 ## Known Bugs
 
 -   Minor styling issues on some mobile devices (resolved)
+-   Issue on deployed site where emails will not send (resolved)
 -   Checkout form validation error messages sometimes unclear (in progress)
 
 ## Browser Compatibility
@@ -66,10 +67,11 @@ The following tools were used to validate the code:
 
 -   PEP8
 -   All Python files follow PEP8 guidelines
+-   Django files left
 
-## Testing Process
+### Testing Process
 
-### Unit Testing
+#### Unit Testing
 
 -   Tests cover all major functionality including:
     -   User authentication
@@ -80,7 +82,7 @@ The following tools were used to validate the code:
     -   Form validation
     -   API endpoints
 
-### Integration Testing
+#### Integration Testing
 
 -   Tests verify the interaction between different components:
     -   User registration and login flow
@@ -89,7 +91,7 @@ The following tools were used to validate the code:
     -   Payment processing with Stripe
     -   AWS S3 file uploads
 
-### End-to-End Testing
+#### End-to-End Testing
 
 -   Manual testing of complete user journeys:
     -   User registration to first purchase

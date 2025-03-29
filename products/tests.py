@@ -62,7 +62,7 @@ class TestProduct:
 
     def test_product_with_all_fields(self, category):
         # Create a test image
-        image_content = b'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;'
+        image_content = b'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;'  # noqa: E501
         image = SimpleUploadedFile(
             'test.gif',
             image_content,

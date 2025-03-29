@@ -122,6 +122,8 @@ User profile page showing order history and saved delivery information.
 
 The application uses a relational database with the following main models:
 
+For a detailed Entity Relationship Diagram (ERD) showing the relationships between models, please see [erd.md](erd.md).
+
 ### User Model
 
 -   Standard Django user model with authentication fields
@@ -406,67 +408,3 @@ For detailed information about testing, including automated tests, manual testin
 I'd like to give thanks to my mentor Graeme Taylor for the support he has given me throughout my project. Here is a [link](https://github.com/G-Taylor) to his GitHub.
 
 I'd also like to thank my tutor Jonathan from Nescot for his guidance and feedback.
-
-### Browser Compatibility
-
-The website has been tested and is fully functional on the following browsers:
-
--   Google Chrome (latest version)
--   Mozilla Firefox (latest version)
--   Microsoft Edge (latest version)
--   Safari (latest version)
--   Mobile browsers (iOS Safari, Android Chrome)
-
-### Code Validation
-
-The following tools were used to validate the code:
-
-#### HTML Validation
-
--   W3C HTML Validator
--   All pages pass validation with no errors
-
-#### CSS Validation
-
--   W3C CSS Validator
--   All stylesheets pass validation with no errors
-
-#### JavaScript Validation
-
--   JSHint
--   All JavaScript files pass validation with no errors
-
-#### Python Validation
-
--   PEP8
--   All Python files follow PEP8 guidelines
-
-### Testing Process
-
-#### Unit Testing
-
--   Tests cover all major functionality including:
-    -   User authentication
-    -   Product management
-    -   Shopping cart operations
-    -   Checkout process
-    -   Order management
-    -   Form validation
-    -   API endpoints
-
-#### Integration Testing
-
--   Tests verify the interaction between different components:
-    -   User registration and login flow
-    -   Product search and filtering
-    -   Shopping cart to checkout process
-    -   Payment processing with Stripe
-    -   AWS S3 file uploads
-
-#### End-to-End Testing
-
--   Manual testing of complete user journeys:
-    -   User registration to first purchase
-    -   Product browsing to checkout
-    -   Profile management
-    -   Admin product management
